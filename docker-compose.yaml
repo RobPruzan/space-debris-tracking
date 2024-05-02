@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    container_name: 460_db
+    environment:
+      POSTGRES_DB: db_project
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+    ports:
+      - 5432:5432

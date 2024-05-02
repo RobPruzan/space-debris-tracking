@@ -1,0 +1,547 @@
+{
+  "id": "004e2932-99e0-4ab7-b81b-3a6f791e6850",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "agencies": {
+      "name": "agencies",
+      "schema": "",
+      "columns": {
+        "agency_id": {
+          "name": "agency_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "agency_name": {
+          "name": "agency_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "headquarters": {
+          "name": "headquarters",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "founded_year": {
+          "name": "founded_year",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contact_info": {
+          "name": "contact_info",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "collision_risks": {
+      "name": "collision_risks",
+      "schema": "",
+      "columns": {
+        "risk_id": {
+          "name": "risk_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "debris_id": {
+          "name": "debris_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "satelliteId": {
+          "name": "satelliteId",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_level": {
+          "name": "risk_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estimated_collision_time": {
+          "name": "estimated_collision_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "collision_risks_debris_id_debris_pieces_debris_id_fk": {
+          "name": "collision_risks_debris_id_debris_pieces_debris_id_fk",
+          "tableFrom": "collision_risks",
+          "tableTo": "debris_pieces",
+          "columnsFrom": [
+            "debris_id"
+          ],
+          "columnsTo": [
+            "debris_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "collision_risks_satelliteId_satellites_satellite_id_fk": {
+          "name": "collision_risks_satelliteId_satellites_satellite_id_fk",
+          "tableFrom": "collision_risks",
+          "tableTo": "satellites",
+          "columnsFrom": [
+            "satelliteId"
+          ],
+          "columnsTo": [
+            "satellite_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "debris_mitigation_attempts": {
+      "name": "debris_mitigation_attempts",
+      "schema": "",
+      "columns": {
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "debris_id": {
+          "name": "debris_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "strategy_id": {
+          "name": "strategy_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attempt_date": {
+          "name": "attempt_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "result": {
+          "name": "result",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "debris_mitigation_attempts_debris_id_debris_pieces_debris_id_fk": {
+          "name": "debris_mitigation_attempts_debris_id_debris_pieces_debris_id_fk",
+          "tableFrom": "debris_mitigation_attempts",
+          "tableTo": "debris_pieces",
+          "columnsFrom": [
+            "debris_id"
+          ],
+          "columnsTo": [
+            "debris_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "debris_mitigation_attempts_strategy_id_mitigation_strategies_strategy_id_fk": {
+          "name": "debris_mitigation_attempts_strategy_id_mitigation_strategies_strategy_id_fk",
+          "tableFrom": "debris_mitigation_attempts",
+          "tableTo": "mitigation_strategies",
+          "columnsFrom": [
+            "strategy_id"
+          ],
+          "columnsTo": [
+            "strategy_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "debris_observations": {
+      "name": "debris_observations",
+      "schema": "",
+      "columns": {
+        "observation_id": {
+          "name": "observation_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "station_id": {
+          "name": "station_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "debris_id": {
+          "name": "debris_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "observation_timestamp": {
+          "name": "observation_timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "velocity": {
+          "name": "velocity",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "debris_observations_station_id_tracking_stations_station_id_fk": {
+          "name": "debris_observations_station_id_tracking_stations_station_id_fk",
+          "tableFrom": "debris_observations",
+          "tableTo": "tracking_stations",
+          "columnsFrom": [
+            "station_id"
+          ],
+          "columnsTo": [
+            "station_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "debris_observations_debris_id_debris_pieces_debris_id_fk": {
+          "name": "debris_observations_debris_id_debris_pieces_debris_id_fk",
+          "tableFrom": "debris_observations",
+          "tableTo": "debris_pieces",
+          "columnsFrom": [
+            "debris_id"
+          ],
+          "columnsTo": [
+            "debris_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "debris_orbit_mapping": {
+      "name": "debris_orbit_mapping",
+      "schema": "",
+      "columns": {
+        "mapping_id": {
+          "name": "mapping_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "debris_id": {
+          "name": "debris_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "orbit_id": {
+          "name": "orbit_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "debris_orbit_mapping_debris_id_debris_pieces_debris_id_fk": {
+          "name": "debris_orbit_mapping_debris_id_debris_pieces_debris_id_fk",
+          "tableFrom": "debris_orbit_mapping",
+          "tableTo": "debris_pieces",
+          "columnsFrom": [
+            "debris_id"
+          ],
+          "columnsTo": [
+            "debris_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "debris_orbit_mapping_orbit_id_orbits_orbit_id_fk": {
+          "name": "debris_orbit_mapping_orbit_id_orbits_orbit_id_fk",
+          "tableFrom": "debris_orbit_mapping",
+          "tableTo": "orbits",
+          "columnsFrom": [
+            "orbit_id"
+          ],
+          "columnsTo": [
+            "orbit_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "debris_pieces": {
+      "name": "debris_pieces",
+      "schema": "",
+      "columns": {
+        "debris_id": {
+          "name": "debris_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "origin_satellite_id": {
+          "name": "origin_satellite_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_status": {
+          "name": "current_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "size": {
+          "name": "size",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "material": {
+          "name": "material",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "debris_pieces_origin_satellite_id_satellites_satellite_id_fk": {
+          "name": "debris_pieces_origin_satellite_id_satellites_satellite_id_fk",
+          "tableFrom": "debris_pieces",
+          "tableTo": "satellites",
+          "columnsFrom": [
+            "origin_satellite_id"
+          ],
+          "columnsTo": [
+            "satellite_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "mitigation_strategies": {
+      "name": "mitigation_strategies",
+      "schema": "",
+      "columns": {
+        "strategy_id": {
+          "name": "strategy_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "success_rate": {
+          "name": "success_rate",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cost_estimate": {
+          "name": "cost_estimate",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "orbits": {
+      "name": "orbits",
+      "schema": "",
+      "columns": {
+        "orbit_id": {
+          "name": "orbit_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "altitude": {
+          "name": "altitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inclination": {
+          "name": "inclination",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "eccentricity": {
+          "name": "eccentricity",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "satellites": {
+      "name": "satellites",
+      "schema": "",
+      "columns": {
+        "satellite_id": {
+          "name": "satellite_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "agency_id": {
+          "name": "agency_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "launch_date": {
+          "name": "launch_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "decommission_date": {
+          "name": "decommission_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "orbit_type": {
+          "name": "orbit_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "satellites_agency_id_agencies_agency_id_fk": {
+          "name": "satellites_agency_id_agencies_agency_id_fk",
+          "tableFrom": "satellites",
+          "tableTo": "agencies",
+          "columnsFrom": [
+            "agency_id"
+          ],
+          "columnsTo": [
+            "agency_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "tracking_stations": {
+      "name": "tracking_stations",
+      "schema": "",
+      "columns": {
+        "station_id": {
+          "name": "station_id",
+          "type": "real",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "agency_id": {
+          "name": "agency_id",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location": {
+          "name": "location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "capabilities": {
+          "name": "capabilities",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tracking_stations_agency_id_agencies_agency_id_fk": {
+          "name": "tracking_stations_agency_id_agencies_agency_id_fk",
+          "tableFrom": "tracking_stations",
+          "tableTo": "agencies",
+          "columnsFrom": [
+            "agency_id"
+          ],
+          "columnsTo": [
+            "agency_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

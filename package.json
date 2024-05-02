@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "migrate:generate": "drizzle-kit generate:pg",
+    "migrate:run": "bun run src/migrate.ts",
+    "studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@neondatabase/serverless": "^0.9.1",
+    "drizzle-orm": "^0.30.10",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.1",
+    "drizzle-kit": "^0.20.17"
+  }
+}
