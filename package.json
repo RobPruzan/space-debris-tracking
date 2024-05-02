@@ -2,6 +2,7 @@
   "scripts": {
     "migrate:generate": "drizzle-kit generate:pg",
     "migrate:run": "bun run src/migrate.ts",
+    "seed": "bun run src/seed.ts",
     "studio": "drizzle-kit studio"
   },
   "dependencies": {
