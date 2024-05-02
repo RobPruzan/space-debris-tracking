@@ -1,5 +1,5 @@
 {
-  "id": "004e2932-99e0-4ab7-b81b-3a6f791e6850",
+  "id": "55d5a451-43ed-4682-a864-5d823020591a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -10,7 +10,7 @@
       "columns": {
         "agency_id": {
           "name": "agency_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -50,21 +50,21 @@
       "columns": {
         "risk_id": {
           "name": "risk_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "debris_id": {
           "name": "debris_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "satelliteId": {
           "name": "satelliteId",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "risk_level": {
           "name": "risk_level",
@@ -117,25 +117,25 @@
       "columns": {
         "attempt_id": {
           "name": "attempt_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "debris_id": {
           "name": "debris_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "strategy_id": {
           "name": "strategy_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "attempt_date": {
           "name": "attempt_date",
-          "type": "date",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
@@ -184,21 +184,21 @@
       "columns": {
         "observation_id": {
           "name": "observation_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "station_id": {
           "name": "station_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "debris_id": {
           "name": "debris_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "observation_timestamp": {
           "name": "observation_timestamp",
@@ -257,21 +257,21 @@
       "columns": {
         "mapping_id": {
           "name": "mapping_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "debris_id": {
           "name": "debris_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "orbit_id": {
           "name": "orbit_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -312,15 +312,15 @@
       "columns": {
         "debris_id": {
           "name": "debris_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "origin_satellite_id": {
           "name": "origin_satellite_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "current_status": {
           "name": "current_status",
@@ -330,7 +330,7 @@
         },
         "size": {
           "name": "size",
-          "type": "double precision",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -366,7 +366,7 @@
       "columns": {
         "strategy_id": {
           "name": "strategy_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -400,7 +400,7 @@
       "columns": {
         "orbit_id": {
           "name": "orbit_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -434,15 +434,15 @@
       "columns": {
         "satellite_id": {
           "name": "satellite_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "agency_id": {
           "name": "agency_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "name": {
           "name": "name",
@@ -452,13 +452,13 @@
         },
         "launch_date": {
           "name": "launch_date",
-          "type": "date",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
         "decommission_date": {
           "name": "decommission_date",
-          "type": "date",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         },
@@ -494,15 +494,15 @@
       "columns": {
         "station_id": {
           "name": "station_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "agency_id": {
           "name": "agency_id",
-          "type": "real",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "location": {
           "name": "location",
