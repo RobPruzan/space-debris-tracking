@@ -27,3 +27,7 @@ https://pnpm.io/installation
 ### Seed database tables
 
 `pnpm seed`
+
+### Inspect database
+
+`pnpm studio`
