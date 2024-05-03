@@ -105,6 +105,8 @@ export const db = drizzle(sqldb);
             JOIN debris_observations o ON d.debris_id = o.debris_id
             AND o.observation_timestamp = latest.LatestObservation;
     `)
+
+    await sqldb.end();
 })();
 
 //This gets the agencies that have the most satellites that have been destroyed/have had bad collisions
@@ -141,6 +143,8 @@ export const db = drizzle(sqldb);
         );
   
     `)
+
+    await sqldb.end();
 })();
 
 //This query lists satellites with the highest number of associated debris pieces, providing insight into satellite models that might be prone to creating debris.
@@ -161,6 +165,8 @@ export const db = drizzle(sqldb);
     LIMIT
     5;
     `)
+
+    await sqldb.end();
 })();
 
 //Select the oldest debris pieces and order them by age
@@ -183,4 +189,6 @@ export const db = drizzle(sqldb);
     ORDER BY
     first_observation ASC;
     `)
+
+    await sqldb.end();
 })();
