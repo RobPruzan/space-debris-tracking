@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { parse } from "csv-parse/sync";
 import { de, fa, faker } from "@faker-js/faker";
-import { db, sql } from "./db";
+import { db, sqldb } from "./db";
 import path from "path";
 import {
   TBagencies,
@@ -67,6 +67,7 @@ function getLocation(record: SatelliteRecord) {
         contactInfo: faker.phone.number(),
         agencyId: i,
       })
+      .onConflictDoNothing()
       .returning()
       .then((data) => data[0]);
     agencies.push(agency);
@@ -191,6 +192,5 @@ function getLocation(record: SatelliteRecord) {
     })
   );
 
-  console.log("DONE");
-  await sql.end();
+  await sqldb.end();
 })();

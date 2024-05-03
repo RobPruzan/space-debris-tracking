@@ -1,5 +1,5 @@
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { db, sql } from "./db";
+import { db, sqldb } from "./db";
 import path from "path";
 
 (async () => {
@@ -8,6 +8,6 @@ import path from "path";
     migrationsFolder: path.join(__dirname, "..", "drizzle"),
   });
   console.log("Migrated, closing connection");
-  await sql.end();
+  await sqldb.end();
   console.log("Done");
 })();
