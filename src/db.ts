@@ -19,85 +19,127 @@ export const sqldb = postgres(connString);
 export const db = drizzle(sqldb);
 
 const queries = (() => {
+
+
+    /*
+      TODO:
+      
+      Queries that need new entries to make them have a result
+      //This query is going to delete satellites that have been decommissioned for longer than 10 years
+      //This query is going to delete any debris piece that has passed the original satellite 3 times and SMALL in size
+      //Created a way to update a satellite that has a very small chance of staying up after a risk of collision
+      //Delete any satellites that have been decommissioned for over 20 years
+    */
+
+
     (async () => {
-        await db.insert(TBagencies).values({ 
-            agencyId: 42069,
-            agencyName: 'SpaceX', 
-            headquarters: 'Hawthorne, California, USA', 
-            foundedYear: 2002,
-            contactInfo: 'contact@spacex.com' 
-        }).onConflictDoNothing();
-    
+        await db.execute(sql`
+            INSERT INTO
+            agencies (
+                agency_id,
+                agency_name,
+                headquarters,
+                founded_year,
+                contact_info
+            )
+            VALUES
+            (
+                42069,
+                'SpaceX',
+                'Hawthorne, California, USA',
+                2002,
+                'contact@spacex.com'
+            )
+        `);
         await sqldb.end();
     })();
     
     (async () =>{
-        await db.insert(TBagencies).values({ 
-            agencyId: 69420,
-            agencyName: 'NASA', 
-            headquarters: 'Washington, DC', 
-            foundedYear: 1958,
-            contactInfo: 'hq-civilrightsinfo@mail.nasa.gov' 
-        }).onConflictDoNothing();
+        await db.execute(sql`
+            INSERT INTO
+            agencies (
+            agency_id,
+            agency_name,
+            headquarters,
+            founded_year,
+            contact_info
+            )
+        VALUES
+            (
+            69420,
+            'NASA',
+            'Washington, DC',
+            1958,
+            'hq-civilrightsinfo@mail.nasa.gov'
+            )
+        `);
         await sqldb.end();
     })();
     
     (async () =>{
         
-        await db.insert(TBsatellites).values([{ 
-            satelliteId: 696969, 
-            agencyId: 69420, 
-            name: 'Starlink-1', 
-            launchDate: 1294835010000, 
-            orbitType: 'LEO', 
-            decommissionDate: 1746222201000 
-        }]).onConflictDoNothing();
-    
-        await sqldb.end();
-    })();
-    
-    //This query is going to delete satellites that have been decommissioned for longer than 10 years
-    (async () => {
-        const tenYearsAgo = Date.now() - 10 * 365 * 24 * 60 * 60 * 1000; // 10 years in milliseconds
-        await db.delete(TBsatellites)
-            .where(lte(TBsatellites.decommissionDate, tenYearsAgo))
-        await sqldb.end();
-    })();
-    //This query is going to delete any debris piece that has passed the original satellite 3 times and SMALL in size
-    (async () => {
         await db.execute(sql`
-            DELETE FROM debris_pieces
-            WHERE debris_id IN (
-                SELECT d.debris_id
-                FROM debris_pieces d
-                    JOIN debris_orbit_mapping dom ON d.debris_id = dom.debris_id
-                    JOIN orbits o ON dom.orbit_id = o.orbit_id
-                    WHERE d.origin_satellite_id = dom.debris_id
-                    GROUP BY d.debris_id
-                    HAVING COUNT(dom.debris_id) >= 3
+            INSERT INTO
+            satellites (
+            satellite_id,
+            agency_id,
+            NAME,
+            launch_date,
+            decommission_date,
+            orbit_type
             )
-            AND size = 'SMALL';
+        VALUES
+            (
+            696969,
+            42069,
+            'Starlink-1',
+            '872253000004',
+            100000000000000000,
+            'LEO'
+            )
         `);
-    })();   
+    
+        await sqldb.end();
+    })();
+    
+    //This query is going to delete debris peices that have a low activity status and are small in size
+    (async () => {
+        
+       await db.execute(sql`
+       DELETE FROM debris_pieces
+       WHERE
+         current_status = 'high'
+         AND size = 'SMALL'
+       RETURNING
+         *
+       `);
+       await sqldb.end();
+    })();
+
     //Created a way to update a satellite that has a very small chance of staying up after a risk of collision
+    
         (async () => {
             await db.execute(sql`
-                UPDATE satellites
-                SET
-                decommission_date = extract(epoch from current_timestamp) * 1000
+            UPDATE "debris_pieces"
+            SET
+              "size" = 'SMALL'
+            WHERE
+              "debris_id" IN (
+                SELECT
+                  dp."debris_id"
                 FROM
-                collision_risks cr
-                JOIN debris_mitigation_attempts dma ON cr.debris_id = dma.debris_id
-                JOIN mitigation_strategies ms ON ms.strategy_id = dma.strategy_id
+                  "debris_mitigation_attempts" dma
+                  JOIN "debris_pieces" dp ON dma."debris_id" = dp."debris_id"
                 WHERE
-                satellites.satellite_id = cr."satelliteId"
-                AND cr.risk_level = 'HIGH'
-                AND ms.success_rate < 0.01;
+                  dma."result" = 'SUCCESS'
+              )
+            RETURNING
+              *;
             `);
             await sqldb.end();
         })();
     
-    //Update the current status of debris to 'Inactive' if not observed for more than 10 years
+    //Delete any satellites that have been decommissioned for over 20 years
     (async () => {
         await db.execute(sql`
             DELETE FROM satellites
@@ -106,7 +148,7 @@ const queries = (() => {
                 EPOCH
                 FROM
                 CURRENT_TIMESTAMP
-            ) * 1000 - 315576000000;
+            ) * 1000 - 631152000000
         `);
         await sqldb.end();
     })();
@@ -117,7 +159,7 @@ const queries = (() => {
         SELECT size, COUNT(*) AS total_count
         FROM debris_pieces
         WHERE size IN ('SMALL', 'MEDIUM', 'LARGE')
-        GROUP BY size;    
+        GROUP BY size 
         `);
         await sqldb.end();
     })();
@@ -145,7 +187,7 @@ const queries = (() => {
                         debris_id
                 ) latest ON d.debris_id = latest.debris_id
                 JOIN debris_observations o ON d.debris_id = o.debris_id
-                AND o.observation_timestamp = latest.LatestObservation;
+                AND o.observation_timestamp = latest.LatestObservation
         `)
     
         await sqldb.end();
@@ -154,35 +196,34 @@ const queries = (() => {
     //This gets the agencies that have the most satellites that have been destroyed/have had bad collisions
     (async () => {
         await db.execute(sql`
-        SELECT
-        a.*,
-        COUNT(s.satellite_id) AS decommissioned_count
-        FROM
-            agencies a
-            JOIN satellites s ON a.agency_id = s.agency_id
-        WHERE
-            s.decommission_date IS NOT NULL
-        GROUP BY
-            a.agency_id
-        HAVING
-            COUNT(s.satellite_id) = (
+        WITH decommissioned_counts AS (
             SELECT
-                MAX(decommissioned_count)
+              agency_id,
+              COUNT(satellite_id) AS decommissioned_count
             FROM
-                (
-                SELECT
-                    agency_id,
-                    COUNT(satellite_id) AS decommissioned_count
-                FROM
-                    satellites
-                WHERE
-                    decommission_date IS NOT NULL
-                GROUP BY
-                    agency_id
-                ) AS counts
+              satellites
             WHERE
-                counts.agency_id = a.agency_id
-            );
+              decommission_date IS NOT NULL
+            GROUP BY
+              agency_id
+          ),
+          top_20_agencies AS (
+            SELECT
+              agency_id,
+              decommissioned_count
+            FROM
+              decommissioned_counts
+            ORDER BY
+              decommissioned_count DESC
+            LIMIT 20
+          )
+          SELECT
+            a.*,
+            t.decommissioned_count
+          FROM
+            agencies a
+            JOIN top_20_agencies t ON a.agency_id = t.agency_id
+          
       
         `)
     
@@ -205,7 +246,7 @@ const queries = (() => {
         ORDER BY
         debris_count DESC
         LIMIT
-        5;
+        5
         `)
     
         await sqldb.end();
@@ -229,7 +270,8 @@ const queries = (() => {
         dp.size,
         dp.material
         ORDER BY
-        first_observation ASC;
+        first_observation ASC
+        LIMIT 100
         `)
     
         await sqldb.end();

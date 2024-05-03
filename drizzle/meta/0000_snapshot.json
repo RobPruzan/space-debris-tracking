@@ -1,5 +1,5 @@
 {
-  "id": "55d5a451-43ed-4682-a864-5d823020591a",
+  "id": "db833eba-7c25-4fd4-95ca-cbd05213978f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -91,7 +91,7 @@
           "columnsTo": [
             "debris_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "collision_risks_satelliteId_satellites_satellite_id_fk": {
@@ -104,7 +104,7 @@
           "columnsTo": [
             "satellite_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -158,7 +158,7 @@
           "columnsTo": [
             "debris_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "debris_mitigation_attempts_strategy_id_mitigation_strategies_strategy_id_fk": {
@@ -171,7 +171,7 @@
           "columnsTo": [
             "strategy_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -231,7 +231,7 @@
           "columnsTo": [
             "station_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "debris_observations_debris_id_debris_pieces_debris_id_fk": {
@@ -244,7 +244,7 @@
           "columnsTo": [
             "debris_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -286,7 +286,7 @@
           "columnsTo": [
             "debris_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "debris_orbit_mapping_orbit_id_orbits_orbit_id_fk": {
@@ -299,7 +299,7 @@
           "columnsTo": [
             "orbit_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -353,7 +353,7 @@
           "columnsTo": [
             "satellite_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -481,7 +481,7 @@
           "columnsTo": [
             "agency_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -529,7 +529,7 @@
           "columnsTo": [
             "agency_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },

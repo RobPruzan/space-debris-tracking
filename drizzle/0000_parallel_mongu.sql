@@ -76,67 +76,67 @@ CREATE TABLE IF NOT EXISTS "tracking_stations" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "collision_risks" ADD CONSTRAINT "collision_risks_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "collision_risks" ADD CONSTRAINT "collision_risks_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "collision_risks" ADD CONSTRAINT "collision_risks_satelliteId_satellites_satellite_id_fk" FOREIGN KEY ("satelliteId") REFERENCES "satellites"("satellite_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "collision_risks" ADD CONSTRAINT "collision_risks_satelliteId_satellites_satellite_id_fk" FOREIGN KEY ("satelliteId") REFERENCES "satellites"("satellite_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_mitigation_attempts" ADD CONSTRAINT "debris_mitigation_attempts_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_mitigation_attempts" ADD CONSTRAINT "debris_mitigation_attempts_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_mitigation_attempts" ADD CONSTRAINT "debris_mitigation_attempts_strategy_id_mitigation_strategies_strategy_id_fk" FOREIGN KEY ("strategy_id") REFERENCES "mitigation_strategies"("strategy_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_mitigation_attempts" ADD CONSTRAINT "debris_mitigation_attempts_strategy_id_mitigation_strategies_strategy_id_fk" FOREIGN KEY ("strategy_id") REFERENCES "mitigation_strategies"("strategy_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_observations" ADD CONSTRAINT "debris_observations_station_id_tracking_stations_station_id_fk" FOREIGN KEY ("station_id") REFERENCES "tracking_stations"("station_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_observations" ADD CONSTRAINT "debris_observations_station_id_tracking_stations_station_id_fk" FOREIGN KEY ("station_id") REFERENCES "tracking_stations"("station_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_observations" ADD CONSTRAINT "debris_observations_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_observations" ADD CONSTRAINT "debris_observations_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_orbit_mapping" ADD CONSTRAINT "debris_orbit_mapping_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_orbit_mapping" ADD CONSTRAINT "debris_orbit_mapping_debris_id_debris_pieces_debris_id_fk" FOREIGN KEY ("debris_id") REFERENCES "debris_pieces"("debris_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_orbit_mapping" ADD CONSTRAINT "debris_orbit_mapping_orbit_id_orbits_orbit_id_fk" FOREIGN KEY ("orbit_id") REFERENCES "orbits"("orbit_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_orbit_mapping" ADD CONSTRAINT "debris_orbit_mapping_orbit_id_orbits_orbit_id_fk" FOREIGN KEY ("orbit_id") REFERENCES "orbits"("orbit_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "debris_pieces" ADD CONSTRAINT "debris_pieces_origin_satellite_id_satellites_satellite_id_fk" FOREIGN KEY ("origin_satellite_id") REFERENCES "satellites"("satellite_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "debris_pieces" ADD CONSTRAINT "debris_pieces_origin_satellite_id_satellites_satellite_id_fk" FOREIGN KEY ("origin_satellite_id") REFERENCES "satellites"("satellite_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "satellites" ADD CONSTRAINT "satellites_agency_id_agencies_agency_id_fk" FOREIGN KEY ("agency_id") REFERENCES "agencies"("agency_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "satellites" ADD CONSTRAINT "satellites_agency_id_agencies_agency_id_fk" FOREIGN KEY ("agency_id") REFERENCES "agencies"("agency_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tracking_stations" ADD CONSTRAINT "tracking_stations_agency_id_agencies_agency_id_fk" FOREIGN KEY ("agency_id") REFERENCES "agencies"("agency_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "tracking_stations" ADD CONSTRAINT "tracking_stations_agency_id_agencies_agency_id_fk" FOREIGN KEY ("agency_id") REFERENCES "agencies"("agency_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
