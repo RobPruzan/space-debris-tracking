@@ -106,7 +106,7 @@ const queries = (() => {
     (async () => {
         
        await db.execute(sql`
-       DELETE FROM debris_pieces
+       g debris_pieces
        WHERE
          current_status = 'high'
          AND size = 'SMALL'
@@ -131,7 +131,7 @@ const queries = (() => {
                   "debris_mitigation_attempts" dma
                   JOIN "debris_pieces" dp ON dma."debris_id" = dp."debris_id"
                 WHERE
-                  dma."result" = 'SUCCESS'
+                  dma."result" = 'UNDEFINED'
               )
             RETURNING
               *;
@@ -139,19 +139,6 @@ const queries = (() => {
             await sqldb.end();
         })();
     
-    //Delete any satellites that have been decommissioned for over 20 years
-    (async () => {
-        await db.execute(sql`
-            DELETE FROM satellites
-            WHERE
-            decommission_date <= EXTRACT(
-                EPOCH
-                FROM
-                CURRENT_TIMESTAMP
-            ) * 1000 - 631152000000
-        `);
-        await sqldb.end();
-    })();
     
     //Gets the total number of each debris size
     (async () => {
@@ -234,19 +221,19 @@ const queries = (() => {
     (async () => { 
         await db.execute(sql`
         SELECT
-        s.name,
-        d.material,
+            s.name,
+            d.material,
         COUNT(d.debris_id) AS debris_count
         FROM
-        satellites s
+            satellites s
         JOIN debris_pieces d ON s.satellite_id = d.origin_satellite_id
         GROUP BY
-        s.satellite_id,
-        d.material
+            s.satellite_id,
+            d.material
         ORDER BY
-        debris_count DESC
+            debris_count DESC
         LIMIT
-        5
+            5
         `)
     
         await sqldb.end();
