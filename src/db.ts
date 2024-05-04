@@ -44,7 +44,7 @@ const queries = (() => {
             )
             VALUES
             (
-                42069,
+                43609,
                 'SpaceX',
                 'Hawthorne, California, USA',
                 2002,
@@ -90,8 +90,8 @@ const queries = (() => {
             )
         VALUES
             (
-            696969,
-            42069,
+            4000000,
+            43609,
             'Starlink-1',
             '872253000004',
             100000000000000000,
@@ -106,7 +106,7 @@ const queries = (() => {
     (async () => {
         
        await db.execute(sql`
-       g debris_pieces
+       DELETE FROM debris_pieces
        WHERE
          current_status = 'high'
          AND size = 'SMALL'
