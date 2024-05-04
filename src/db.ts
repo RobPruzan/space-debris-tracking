@@ -66,7 +66,7 @@ const queries = (() => {
             )
         VALUES
             (
-            69420,
+            20000,
             'NASA',
             'Washington, DC',
             1958,
